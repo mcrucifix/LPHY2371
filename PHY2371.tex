@@ -11,8 +11,9 @@
 \DefineNamedColor{named}{OliveGreen}    {cmyk}{0.64,0,0.95,0.40}
 \DefineNamedColor{named}{DarkGreen}    {cmyk}{0.50,0,0.95,0.40}
 \DefineNamedColor{named}{Dandelion}     {cmyk}{0,0.29,0.84,0}
+\DeclareMathAlphabet      {\mathup}{OT1}{\familydefault}{m}{n}
 \usepackage{algpseudocode}
-\def\d{\mathrm{d}}
+\def\d{\mathup{d}}
 \def\dt{k}
 \def\T{^T}
 \def\vec{\mathbf}
@@ -245,7 +246,7 @@
 $\ddt{x} = -\lambda x$, \quad avec $x(t_0)=x_0$. \newline
 Posons $\hat{x}=x/x_0$ et $\hat{t}=(t-t_0)\lambda$, on a 
 \begin{equation}
-\dd{\hat{x}}{\hat{t}} = - \hat {x} \quad\textrm{avec}\quad \hat{x}(0)=1.
+\dd{\hat{x}}{\hat{t}} = - \hat {x} \quad\text{avec}\quad \hat{x}(0)=1.
 \label{eq:rad}
 \end{equation}
 \end{exampleblock}
@@ -256,7 +257,7 @@ Posons $\hat{x}=x/x_0$ et $\hat{t}=(t-t_0)\lambda$, on a
 \end{exampleblock}
 \begin{exampleblock}{Oscillateur harmonique}
 \begin{equation}
-\ddt{p}=-\pdd{H}{q} \, ; \, \ddt{q}=\pdd{H}{p} \quad\textrm{avec\ } H=\frac{1}{2}(p^2+q^2)
+\ddt{p}=-\pdd{H}{q} \, ; \, \ddt{q}=\pdd{H}{p} \quad\text{avec\ } H=\frac{1}{2}(p^2+q^2)
 \end{equation}
 et $p(0)=p_0$ et $q(0)=q_0$
 \end{exampleblock}
@@ -415,7 +416,7 @@ $M:=\left( \begin{array}{cc} 0 &-1\\1 &0 \end{array}  \right)$.
 
 Le problème discrétisé s'écrit
 \begin{equation*}
-\vec{x}_{i+1} = M_d \vec{x}_i\quad \textrm{avec}
+\vec{x}_{i+1} = M_d \vec{x}_i\quad \text{avec}
 \end{equation*}
 Euler avant : $M_d=(1+M\dt)$; Euler arrière : $M_d=(1-M\dt)^{-1}$ ; 
 Euler centré : $M_d=(1-Mk/2)^{-1}(1+M\dt/2)$.
@@ -610,11 +611,11 @@ Montrer que la méthode de Heun n'est pas symplectique pour l'oscillateur Harmon
 \section{Problèmes aux conditions frontières}
 \begin{frame}
 \begin{exampleblock}{Tension sur un fil}
-\begin{equation} \ddd{y}{x} = f(x), \textrm{pour} \quad  0<x<\ell \quad \textrm{avec}\, y(0)=y(\ell)=0.  \end{equation}
+\begin{equation} \ddd{y}{x} = f(x), \text{pour} \quad  0<x<\ell \quad \text{avec}\, y(0)=y(\ell)=0.  \end{equation}
 \end{exampleblock}
 
 \begin{exampleblock}{Équation de Bratu (cinématique chimique)}
-\begin{equation} \ddd{y}{x} = - e^y, \textrm{pour} \quad 0<x<\ell \quad \textrm{avec}\, y(0)=y(\ell)=0.  \end{equation}
+\begin{equation} \ddd{y}{x} = - e^y, \text{pour} \quad 0<x<\ell \quad \text{avec}\, y(0)=y(\ell)=0.  \end{equation}
 \end{exampleblock}
 
 \end{frame}
@@ -706,9 +707,9 @@ Bien sûr, \texttt{LAPACK} fait ceci pour vous.
 Soit les sommes partielles $r_i$, définies comme la somme des éléments non-diagonaux sur la ligne $i$, i. e. 
 $$ 
 r_i = \left\{ \begin{array}{ll} 
-   |b_i| + |c_i| \quad & \textrm{si} i \neq 1,N, \\
-   |c_1|  & \textrm{si} i = 1, \\
-   |b_N|  & \textrm{si} i = N, \end{array}\right.
+   |b_i| + |c_i| \quad & \text{si} i \neq 1,N, \\
+   |c_1|  & \text{si} i = 1, \\
+   |b_N|  & \text{si} i = N, \end{array}\right.
 $$
 \begin{definition} 
 Une matrice est dite tridiagonalement dominante si $|a_i| \geq r_i\, \forall i$, et strictement dominante si l'inégalité est stricte.
@@ -741,7 +742,7 @@ si $p(x)$, $q(x)$ et $f(x)$ sont continues, et que $q(x)\leq0$, alors la solutio
 \end{frame}
 \begin{frame}\frametitle{Matrice bien conditionnée?}
 \begin{definition}
- La condition Euclidienne d'une matrice, noté $\mathrm{cond}_2$ est le rapport en valeur absolue entre sa plus petite et sa plus grande valeur propre. 
+ La condition Euclidienne d'une matrice, noté $\mathop{cond}_2$ est le rapport en valeur absolue entre sa plus petite et sa plus grande valeur propre. 
 \end{definition}
 
 \begin{numerictip}
@@ -768,7 +769,7 @@ $\vec{A}=
 
 On peut vérifier que pour le problème général \eqref{eq:gen} mais avec $p(x)\equiv p$, $q(x)\equiv q$, et en développant les termes en $\cos$ selon Taylor, que
 \begin{equation*}
-\mathrm{cond}_2(\vec{A}) = \frac{16N^2}{4\pi^2 + \left( p^2 - 4q \right)\ell^2} + \mathcal{O}(N).
+\mathop{cond}_2(\vec{A}) = \frac{16N^2}{4\pi^2 + \left( p^2 - 4q \right)\ell^2} + \mathcal{O}(N).
 \end{equation*}
 \end{frame}
 
@@ -789,9 +790,9 @@ L'erreur totale peut se décomposer en $|(y(x_i) - y_i) + (y_i - \bar{y}_i)|$, o
 \begin{theorem}
 Si les fonction $p$, $q$, $f$ sont continues, et $q(x) \leq -\gamma < 0$, alors
 \begin{equation*}
-|(y(x_i) - y_i)| \leq C \left[\tau_\infty + \mathrm{max}\left\{ |E_0||E_{N+1}| \right\} \right],
+|(y(x_i) - y_i)| \leq C \left[\tau_\infty + \mathop{max}\left\{ |E_0||E_{N+1}| \right\} \right],
 \end{equation*}
-où $\tau_\infty$ est la plus grande erreur de troncature du schéma, $C=\mathrm{max}\left\{ 1,1/\gamma \right\}$, et $E_0$ et $E_\infty$ sont les approximations éventuelles des conditions frontières.
+où $\tau_\infty$ est la plus grande erreur de troncature du schéma, $C=\mathop{max}\left\{ 1,1/\gamma \right\}$, et $E_0$ et $E_\infty$ sont les approximations éventuelles des conditions frontières.
 \end{theorem}
 
 Le terme $|(y_i - \bar{y}_i)| $ devient potentiellement important lorsque la matrice est mal conditionnée. 
@@ -839,6 +840,22 @@ On peut alors utiliser cette valeur de $y_0$ lorsqu'on développe la matrice $\v
 \end{frame}
 
 \begin{frame}
+  \begin{exercice}
+    Considérons le problème général
+    \begin{equation*}
+      y^{\prime\prime} + p(x) y^\prime + q(x) y = f(x)\, \text{pour }0<x<\ell
+    \end{equation*}
+    Développez de schémas en diff. finies corrects à l'ordre 2 pour les conditions
+    (deux exercices distincts)
+    \begin{enumerate}
+      \item $y(0)=\alpha \quad\text{et}\quad y(\ell)+\gamma y^\prime(\ell) = \beta $ \\
+      \item $y(0)=y(\ell)$ \quad\text{et}\quad $y^\prime(0)=y^\prime(\ell)$ 
+    \end{enumerate}
+  \end{exercice}
+\end{frame}
+
+
+\begin{frame}
 \frametitle{Systèmes non linéaires}
 De façon tout à fait générale, l'approximation en différence finie d'un système non-linéaire va pouvoir s'exprimer sous la forme
 \begin{equation}
@@ -878,7 +895,7 @@ Reformuler le problème de façon similaire à un problème aux conditions initi
 La forme générale de l'\'equation de diffusion s'écrit:
 \begin{equation}
 a(x, t) \pdxx{u} + b(x, t) \pdx{u} + c(x, t) u = \pdt u + f(x, t), \quad
-\textrm{pour } \left\{ \begin{array}{l} 0 < x < \ell, \\ 0 < t. \end{array} \right..
+\text{pour } \left\{ \begin{array}{l} 0 < x < \ell, \\ 0 < t. \end{array} \right..
 \label{eq:chaleur}
 \end{equation}
 Nécessite des conditions initiales \emph{et} des conditions aux frontières. 
@@ -887,14 +904,14 @@ Nécessite des conditions initiales \emph{et} des conditions aux frontières.
 \begin{example}
 L'équation de la chaleur (adimensionnelle) se réduit à $a(x, t) = 1$; $b=c=f=0$. \\
 Si on admet, pour conditions ($\ell = 1$):
-$$u(0, t)= u(1, t)=0 \quad \mathrm{ pour }\ t>0\textrm{, et} $$
-$$u(x, 0) = g(x), \quad \textrm{pour } 0 \leq x \leq 1, $$
+$$u(0, t)= u(1, t)=0 \quad \text{ pour }\ t>0\text{, et} $$
+$$u(x, 0) = g(x), \quad \text{pour } 0 \leq x \leq 1, $$
 alors le système admet pour solution \footnote{truc: écrire $u=A(x)C(t)$}:
 \begin{equation}
 u(x, t) = \sum_{n=1}^{\infty} A_n e^{-\lambda_n^2 t} \sin (\lambda x),
 \label{}
 \end{equation}
-où $\lambda_n=n\pi$ et $A_n = 2 \int_0^{1} g(x) \sin (\lambda x)\, \mathrm{d}x$
+où $\lambda_n=n\pi$ et $A_n = 2 \int_0^{1} g(x) \sin (\lambda x)\, \d x$
 \end{example}
 \end{frame}
 \begin{frame}
@@ -903,7 +920,7 @@ où $\lambda_n=n\pi$ et $A_n = 2 \int_0^{1} g(x) \sin (\lambda x)\, \mathrm{d}x$
 Déterminer les solutions analytiques de l'équation de la chaleur adimensionnelle définie page prédente, pour
 \begin{enumerate}
 \item $g(x) = \sin(2\pi x)$, 
-\item $g(x) = \left\{ \begin{array}{ll} 1\quad & \textrm{si \ } a \leq x \leq b, \\ 0 & sinon. \end{array} \right.$
+\item $g(x) = \left\{ \begin{array}{ll} 1\quad & \text{si \ } a \leq x \leq b, \\ 0 & sinon. \end{array} \right.$
 \end{enumerate}
 \end{exercice}
 \begin{block}{Propriétés de l'équation de la chaleur}
@@ -987,7 +1004,7 @@ u_{i, j+1} = \lambda u_{i+1, j} + (1-2\lambda) u_{i,j} + \lambda u_{i-1, j} - k 
 ce qui peut s'écrire sous la forme 
 \begin{align*}
 \vec{u}_0 &= \vec{g}  \\
-\vec{u}_{j+1} &=  (1-\vec{H})\vec{u}_{j} - k \vec{f}_j, \quad \textrm{pour\ }j = 1\ldots M-1\\
+\vec{u}_{j+1} &=  (1-\vec{H})\vec{u}_{j} - k \vec{f}_j, \quad \text{pour\ }j = 1\ldots M-1\\
 \end{align*}
 \begin{columns}
 \column{0.35\textwidth}
@@ -1104,7 +1121,7 @@ Discutez les stabilités A (i.e.: solution bornée) et L des trois méthodes ci-
 \begin{frame}
 De façon générale l'équation d'advection s'écrit
 \begin{equation}
-\pdt{u} + a \pdx {u} = 0,\quad \textrm{pour}\ \left\{ \begin{array}{ll} -\infty < x < \infty, \\ 0 < t, \end{array} \right.
+\pdt{u} + a \pdx {u} = 0,\quad \text{pour}\ \left\{ \begin{array}{ll} -\infty < x < \infty, \\ 0 < t, \end{array} \right.
 \end{equation}
 avec la condition frontière $u(x,0)=g(x)$.
 \end{frame}
@@ -1271,7 +1288,7 @@ u_{ij}=w_j e^{rx_i I},\quad I=\sqrt{-1}
 \end{equation*}
 ce qui, introduit dans la méthode \textit{upwind}, nous donne, 
 \begin{equation}
-w_j = \kappa^j w_0\quad \textrm{avec }\kappa=1-\lambda(1-e^{-rhI})
+w_j = \kappa^j w_0\quad \text{avec }\kappa=1-\lambda(1-e^{-rhI})
 \label{}
 \end{equation}
 
@@ -1411,8 +1428,8 @@ Considérez l'équation $u_t + a u_x + bu = 0$, où $a$,$b$ sont des constantes 
 \item Utilisez la méthode pour intégrer numériquement l'équation sur $0\leq t \leq 7$, dans le cas $a=1$, $b=1/7$, et
 $$
 g(x)=\left\{ 
-  \begin{array}{ll}   \frac{1}{2} (1-cos(2\pi x)) & \textrm{si $0\leq x \leq 1$}, \\ 
-                                                0 & \textrm{sinon.} \end{array} \right. $$
+  \begin{array}{ll}   \frac{1}{2} (1-cos(2\pi x)) & \text{si $0\leq x \leq 1$}, \\ 
+                                                0 & \text{sinon.} \end{array} \right. $$
 Utilisez une grille ou $\lambda$ vaut approximativement $0.99$ et une pour laquelle $\lambda \approx 0.5$. Commentez la méthode et vos résultats.
 \end{enumerate}
 \end{exercice}
@@ -1454,7 +1471,7 @@ Il suffit alors de définir: $r=x+ct$ et $s=x-ct$, tels que:
 De sorte que l'équation se ramène à : $\pdd{}{r}\left( \pdd{}{s} u \right) = 0$,
 qui a pour solution, une fois les conditions initiales prises en compte
 \begin{equation}
-u(x,t)= \frac{1}{2}f(x-ct) + \frac{1}{2}f(x+ct) +  \frac{1}{2c}\int_{x-ct}^{x+ct} g(z)\, \mathrm{d}z
+u(x,t)= \frac{1}{2}f(x-ct) + \frac{1}{2}f(x+ct) +  \frac{1}{2c}\int_{x-ct}^{x+ct} g(z)\, \d z
 \end{equation}
 \end{frame}
 \begin{frame}
