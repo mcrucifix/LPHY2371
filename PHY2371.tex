@@ -21,6 +21,7 @@
 
 \newcounter{NumNumericTip}
 \newcounter{theexercice}
+\newcounter{theexerciceexamen}
 \usepackage[]{graphicx}
 \usepackage[]{cancel}
 
@@ -61,6 +62,21 @@
       \usebeamertemplate{block begin}}
     {\par\usebeamertemplate{block end}\end{actionenv}}
 
+\newenvironment<>{exerciceexamen}{%
+  \refstepcounter{theexerciceexamen}
+  \begin{actionenv}#1%
+      \def\insertblocktitle{Exercice d'examen \arabic{theexerciceexamen}}%
+      \par%
+      \mode<presentation>{%
+        \setbeamercolor{block title}{fg=white,bg=orange!20!black}
+       \setbeamercolor{block body}{fg=black,bg=red!30}
+     }%
+      \usebeamertemplate{block begin}}
+    {\par\usebeamertemplate{block end}\end{actionenv}}
+
+
+
+
 \newenvironment<>{numerictip}{%
   \begin{actionenv}#1%
      \addtocounter{NumNumericTip}{1}
@@ -83,10 +99,10 @@
 \newcommand{\dddt}[1]{\frac{\d^2#1}{\d t^2}}
 \newcommand{\ddd}[2]{\frac{\d^2#1}{\d #2^2}}
 \newcommand{\dd}[2]{\frac{\d#1}{\d#2}}
-\newcommand{\pdd}[2]{\frac{\partial#1}{\partial#2}}
 \newcommand{\pdx}[1]{\frac{\partial#1}{\partial x}}
 \newcommand{\pdt}[1]{\frac{\partial#1}{\partial t}}
 \newcommand{\pd}[2]{\frac{\partial#1}{\partial #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2#1}{\partial#2^2}}
 \newcommand{\pdxx}[1]{\frac{\partial^2#1}{\partial x^2}}
 \newcommand{\pdxt}[1]{\frac{\partial^2#1}{\partial x \partial t}}
 \newcommand{\pdtt}[1]{\frac{\partial^2#1}{\partial t^2}}
@@ -257,7 +273,7 @@ Posons $\hat{x}=x/x_0$ et $\hat{t}=(t-t_0)\lambda$, on a
 \end{exampleblock}
 \begin{exampleblock}{Oscillateur harmonique}
 \begin{equation}
-\ddt{p}=-\pdd{H}{q} \, ; \, \ddt{q}=\pdd{H}{p} \quad\text{avec\ } H=\frac{1}{2}(p^2+q^2)
+\ddt{p}=-\pd{H}{q} \, ; \, \ddt{q}=\pd{H}{p} \quad\text{avec\ } H=\frac{1}{2}(p^2+q^2)
 \end{equation}
 et $p(0)=p_0$ et $q(0)=q_0$
 \end{exampleblock}
@@ -304,10 +320,10 @@ recourt au développement de Taylor.
 \medskip
 On peut faire:
 \begin{align}
-x_{i+1} &= x_i + F_i k + k\cdot \tau , & \quad \tau &= \dddt {x} (x_i,t_i) {k \over 2} + \mathcal{O}(k^2) \label{eq:d1} 
+x(t_{i+1}) &= x(t_i) + F_i k + k\cdot \tau , & \quad \tau &= \dddt {x} (x(t_i),t_i) {k \over 2} + \mathcal{O}(k^2) \label{eq:d1} 
 \end{align} ou bien:
 \begin{align}
-x_{i}   &= x_{i+1} - F_{i+1} k + k\cdot\tau, &\quad \tau &= \dddt {x} (x_{i+1},t_{i+1}) {k\over 2} + \mathcal{O}(k^2) \label{eq:d2}
+x_(t_{i})   &= x(t_{i+1}) - F_{i+1} k + k\cdot\tau, &\quad \tau &= \dddt {x} (x(t_{i+1}),t_{i+1}) {k\over 2} + \mathcal{O}(k^2) \label{eq:d2}
 \end{align}
 
 \end{frame}
@@ -987,7 +1003,7 @@ u_{xx} (x_i, t_j) = u_t (x_i, t_j) + f (x_i, t_j)
 \frametitle{3. Exprimer le système sous forme de différence finie}
 On choisit un schéma centré dans l'espace:
 \begin{align*}
-u_{xx}(x_i, t_j) &= \frac{u(x_{i+1}, t_j) - u (x_i, t_j) + u(x_{i-1}, t_j)}{h^2} + \mathcal{O}(h^2)
+u_{xx}(x_i, t_j) &= \frac{u(x_{i+1}, t_j) - 2u (x_i, t_j) + u(x_{i-1}, t_j)}{h^2} + \mathcal{O}(h^2)
 \end{align*}
 et Euler avant dans le temps:
 \begin{align*}
@@ -1283,25 +1299,27 @@ u_{i,j+1} &= (1+\lambda) u_{i,j} - \lambda u_{i+1,j}, \\
 \frametitle{Domaine de stabilité}
 Comme à l'ordinaire, nous pouvons tenter une solution de la forme:
 \begin{equation*}
-u_{ij}=w_j e^{rx_i I},\quad I=\sqrt{-1} 
+u_{ij}=w_j e^{ \icmplx rx_i},\quad \icmplx=\sqrt{-1} 
 \label{}
 \end{equation*}
 ce qui, introduit dans la méthode \textit{upwind}, nous donne, 
 \begin{equation}
-w_j = \kappa^j w_0\quad \text{avec }\kappa=1-\lambda(1-e^{-rhI})
+w_j = \kappa^j w_0\quad \text{avec }\kappa=1-\lambda(1-e^{-\icmplx rh})
 \label{}
 \end{equation}
 
-La condition de stabilité se ramène donc à $\boxed{|\kappa|^2 \leq 1}$.
 
-Dans le pire des cas ($rh=\pi$), cela revient à $ \lambda \leq 1$.
-($|\kappa|^2=1-4\lambda(1-\lambda)\sin^2(rh/ 2)$)
+La condition de stabilité se ramène donc à (après calcul et en utilisant $1-\cos(rh) = 2\sin^2(rh/2)$):
+\[ \boxed{|\kappa|^2 =  [ 1 -  4\lambda(1-\lambda)\sin^2(rh/2) ] < 1 } \]
+
+Ceci revient à $\lambda(1-\lambda) \sin^2(rh/2) \leq 0$ et,
+ce qui  revient à $ \lambda \leq 1$ (condition CFL).
 \end{frame}
 \begin{frame}
 
 \begin{columns}
 \column{0.45\textwidth}
-\begin{tikzpicture} [scale=2.3]
+\begin{tikzpicture} [scale=2.0]
 \tikzstyle{every node}=[font=\small]
  \pgfsetfillopacity{0.2}
  \filldraw [color=blue] (0.4,0.) circle (0.6) ;
@@ -1316,13 +1334,14 @@ Dans le pire des cas ($rh=\pi$), cela revient à $ \lambda \leq 1$.
  \node [above] at (.4,0) {{$(1-\lambda,0)$}};
  \node  at (0.4,0) {$\cdot$};
  \draw [->, very thick, color=blue] (1,0) arc (0: -90 : 0.6) node [xshift=10, yshift=05] {{$rh$}};
- \draw [->, very thick, color=DarkGreen] (1,0) arc (0: -60 : 1.0) ;
+ \draw [->, very thick, color=DarkGreen] (1,0) arc (0: -60 : 1.0) 
+ node [xshift=10, yshift=05] {{ $ \lambda r h$  }}  ;
  \draw [->] (-1.2,0) -- (1.2,0) node [below] {$\Re(\kappa)$}; 
  \draw [->] (0,-1.2) -- (0,1.2) node [left] {$\Im(\kappa)$}; 
  \draw [color=blue, ->] (0,0) -- (0.4, -0.6 ) node {$\cdot$} ;
  \draw [color=DarkGreen, ->] (0,0) -- ( 0.5000000 ,-0.8660254) node {$\cdot$} ;
- \node [color=blue, text width=15em, right] at (-1,-1.4) {Solution système numérique :  $1-\lambda+\lambda e^{-Irh}$} ; 
- \node [color=DarkGreen, text width=15em,right] at (-1,-1.7) {Solution système originel :  $ e^{-I\lambda rh}$} ; 
+ \node [color=blue, text width=15em, right] at (-1,-1.4) {Solution système numérique :  \\ $1-\lambda+\lambda e^{-\icmplx rh}$} ; 
+ \node [color=DarkGreen, text width=15em,right] at (-1,-1.7) {Solution système originel :  $ e^{-\icmplx \lambda rh}$} ; 
 \end{tikzpicture}
 \column{0.45\textwidth}
 \begin{block}{Observations}
@@ -1438,14 +1457,14 @@ Utilisez une grille ou $\lambda$ vaut approximativement $0.99$ et une pour laque
 \begin{frame}
 \frametitle{Définition}
 \begin{equation}
-\pdd{y}{t} = c^2 \pdd{y}{x},
+\pdd{u}{t} = c^2 \pdd{u}{x},
 \label{}
 \end{equation}
-avec, pour conditions initiales : $y(x,0)=f(x)$ et $\ddt{y}(x,0) = g(x)$.
+avec, pour conditions initiales : $u(x,0)=f(x)$ et $\ddt{u}(x,0) = g(x)$.
 \end{frame}
 \begin{frame}
 \frametitle{Résolution selon Fourier}
-Soit: $y=\hat{y}e^{\icmplx kx-I\omega t}$ : $c^2 k^2 = \omega^2$
+Soit: $y=\hat{y}e^{\icmplx (kx-\omega t)}$ : $\omega^2 = c^2 k^2$
 \begin{equation}
 \Rightarrow y = \hat{y} e^{\icmplx k(x\pm ct)}
 \label{}
@@ -1454,7 +1473,7 @@ Si on pose, plus généralement: $\omega = \omega_r + \icmplx \omega_i$, on a:
 $$y=\hat{y}e^{-\omega_it } e^{\icmplx kx-\icmplx \omega_r t}$$
 \begin{enumerate}
 \item $\omega_i =0$ : système non-dissipatif (serait instable pour $\omega_i < 0$)
-\item $\omega/k = \dd{\omega}{k} =0$ : système non-dispersif
+\item $\omega/k = \dd{\omega}{k} = c$ : système non-dispersif
 \end{enumerate}
 \end{frame}
 
@@ -1466,9 +1485,9 @@ Observez que:
 \end{equation}
 Il suffit alors de définir: $r=x+ct$ et $s=x-ct$, tels que:
 \begin{equation*}
-\pd{}{r}=c\pd{}{x} + c\pd{}{t};\quad\quad \pd{}{s}=c\pd{}{s} - c\pd{}{t};
+\pd{}{r}=\pd{}{x} + c\pd{}{t};\quad\quad \pd{}{s}=\pd{}{x} - c\pd{}{t};
 \end{equation*}
-De sorte que l'équation se ramène à : $\pdd{}{r}\left( \pdd{}{s} u \right) = 0$,
+De sorte que l'équation se ramène à : $\pd{}{r}\left( \pd{}{s} u \right) = 0$,
 qui a pour solution, une fois les conditions initiales prises en compte
 \begin{equation}
 u(x,t)= \frac{1}{2}f(x-ct) + \frac{1}{2}f(x+ct) +  \frac{1}{2c}\int_{x-ct}^{x+ct} g(z)\, \d z
@@ -1479,15 +1498,192 @@ u(x,t)= \frac{1}{2}f(x-ct) + \frac{1}{2}f(x+ct) +  \frac{1}{2c}\int_{x-ct}^{x+ct
 En prenant:
 \begin{align*}
 u_{xx} &= \frac{u_{i+1,j} -  2 u_{i,j} +  u_{i-1,j} } {h^2} + \mathcal{O}(h^2) \\
-u_{tt} &= \frac{u_{i,j+1} -  2 u_{i,j} +  u_{j+1} } {k^2} + \mathcal{O}(k^2) 
+u_{tt} &= \frac{u_{i,j+1} -  2 u_{i,j} +  u_{i,j-1} } {k^2} + \mathcal{O}(k^2) 
 \label{}
 \end{align*}
 On a:
 \begin{equation*}
-u_{i,j+1} = \lambda^2 u{i+1,j} + 2 (1-\lambda^2)u_{i,j} + \lambda^2 u{i-1,j} -  u{i,j-1}  + k^2\tau_{ij}
+u_{i,j+1} = \lambda^2 u_{i+1,j} + 2 (1-\lambda^2)u_{i,j} + \lambda^2 u_{i-1,j} -  u_{i,j-1}  + k^2\tau_{ij}
 \label{}
 \end{equation*}
 où $\tau_{i,j}=\mathcal{O}(h^2) + \mathcal{O}(k^2)$ est l'erreur de troncation et 
 $\lambda = \frac{ck}{h}$.
+\end{frame}
+
+\begin{frame}
+  \frametitle{Stencil et condition CFL}
+  \begin{columns}
+ \column{.4\textwidth}
+\begin{tikzpicture}
+  \draw [-] (-1.8, -1) node [left] {$t_{j-1}$} -- (1.8, -1); 
+ \draw [-] (-1.8, 0) node [left] {$t_j$} -- (1.8, 0); 
+ \draw [-] (-1.8, 1) node [left] {$t_{j+1}$} -- (1.8, 1); 
+ \draw [-] (-1, -1.5) node [yshift=-1.5em] {$x_{i-1}$} -- (-1, 1.5 ); 
+ \draw [-] (0, -1.5) node [yshift=-1.5em] {$x_{i}$} -- (0, 1.5 ); 
+ \draw [-] (1, -1.5) node [yshift=-1.5em] {$x_{i+1}$} -- (1, 1.5 ); 
+ \node at (0,1)  [shape=circle, draw, color=black] { } ; 
+ 
+
+ \node at ( 0,-1)  [shape=circle, draw, fill=black!30] { } ; 
+ \node at ( -1,0)  [shape=circle, draw, fill=black!30] { } ; 
+ \node at ( 0,0)  [shape=circle, draw, fill=black!30] { } ; 
+ \node at ( 1,0)  [shape=circle, draw, fill=black!30] { } ; 
+ \node at ( 0,1)  [shape=circle, draw] { } ; 
+\end{tikzpicture}
+ \column{.4\textwidth}
+    Condition CFL: 
+    \begin{equation*}
+      \frac{ck}{h}\leq 1
+      \label{}
+    \end{equation*}
+  \end{columns}
+ \end{frame}
+
+ \begin{frame}
+   \frametitle{Analyse de stabilité}
+   Considérons une solution de la forme
+   \[ u_{i,j} = w_j e^{\icmplx rx_i} \]
+   Substituée dans l'équation numérique, on a :
+   \[ w_{j+1} - 2 s w_j + w_{j-1}=0,\text{avec}\quad s = 1 - 2\lambda^2 \sin^2(rh/2) \]
+   Il s'agit d'une équation aux différences, que l'on peut tenter de résoudre en essayant $w_j = \kappa^j$.
+   On trouve : 
+   \[ \kappa^2 - 2 s \kappa + 1 = 0, \] soit
+
+   \[ \kappa_{\pm} = s \pm \sqrt {s^2 - 1}. \]
+
+
+ \end{frame}
+ \begin{frame}
+   \frametitle{Analyse de stabilité (ii)}
+   On veut que les deux solutions $|\kappa_{\pm}| \leq 1$, ce qui donne:
+
+   \[  -1 \leq s \leq 1,\text{i.e.}\quad  \lambda^2 \sin^2\left( \frac{rh}{2} \right) < 1 \]
+
+   Le cas le moins favorable se manifeste quand l'argument du sinus $=\pi/2$, i.e., $rh=n\pi$. Dans ce cas, la condition se ramène à $\lambda \leq 1$, ce qui
+   est la condition CFL:
+
+    \[   \frac{ck}{h} \leq 1 \]
+ \end{frame}
+
+ \begin{frame}
+   \frametitle{Onde plane}
+   L'onde plane est une solution classique de l'équation d'onde:
+   \begin{equation*}
+     u(x,t) = e^{\bar k x - \bar \omega t}
+     \label{}
+   \end{equation*}
+  Dont on connait la solution exacte: $\bar\omega^2 = c^2 \bar k^2$. 
+  Voyons comment elle se comporte dans le système numérique:
+  \begin{equation*}
+    e^{-\icmplx k \bar \omega} = \lambda^2 e^{\icmplx h \bar k} + 2(1-\lambda^2) 
+    + \lambda^2 e^{-\icmplx h \bar k} - e^{k\bar\omega},
+    \label{}
+  \end{equation*}
+
+  ce qui, après un peu de calcul (et $2\sin(\frac{\theta}{2}) = 1 - \cos\theta$):
+  \begin{equation*}
+    \sin\left( \frac{\bar \omega k}{2} \right)= \pm \lambda \sin \left( \frac{\bar k h}{2} \right).
+    \label{}
+  \end{equation*}
+
+ \end{frame}
+
+ \begin{frame}
+   \frametitle{Vitesses de phase et de groupe numériques}
+   \begin{eqnarray*}
+     v_{phn} & \approx \pm c \left( 1 - \dfrac{1}{12}(1-\lambda^2)(\bar k h)^2 \right) \\[2em]
+     v_{gn} & \approx \pm c \left( 1 - \dfrac{1}{8}(1-\lambda^2)(\bar k h)^2 \right)
+     \label{}
+   \end{eqnarray*}
+
+ \end{frame}
+
+
+ \section{Exercices d'examen}
+\begin{frame}
+  \frametitle{Mécanique Céleste}
+
+  \def\half{ {1\over2}  }
+\begin{exampleblock}{Le schéma St\o rmer-Verlet}
+\begin{align*}
+  \vec{p}_{i+\half} &= \vec{p}_i - \frac{\dt}{2}  \frac{\partial H}{\partial \vec{q}}(\vec{q}_i, \vec{p}_{i+\half}) \\
+  \vec{q}_{i+1} &= \vec{q}_i + {\dt\over 2}  
+   \left[ 
+  \frac{\partial H}{\partial \vec{p}}(\vec{q}_i, \vec{p}_{i+\half})  + 
+  \frac{\partial H}{\partial \vec{p}}(\vec{q}_{i+1}, \vec{p}_{i+\half})  
+   \right]
+   \\
+  \vec{p}_{i+1} &= \vec{p}_{i+\half} - {\dt\over 2} 
+     \left[
+     \frac{\partial H}{\partial \vec{q}}(\vec{q}_{i+1}, \vec{p}_{i+\half}) 
+     \right] 
+\end{align*}
+\end{exampleblock}
+
+\begin{exerciceexamen}
+  \small
+  En partant de conditions initiales réalistes, calculez l'évolution de l'orbite
+  de Jupiter pour les 5000 prochaines années. \\
+  Tenez-compte d'abord de Jupiter et le Soleil. Tenez-compte ensuite de Saturne. \\
+  Comparez les résultats obtenus avec les schémas de Heun et de St\o rmer - Verlet. 
+\end{exerciceexamen}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Équation de Klein-Gordon}
+
+  \begin{exampleblock}{Contexte physique}
+    L'équation de Klein-Gordon  est une forme relativiste de l'équation de Schröninger. Sa formulation
+    physique est 
+    \begin{equation}
+      \frac{1}{c^2}\frac{\partial^2}{\partial t^2} \psi - \nabla^2\psi + \frac{m^2c^2}{\hbar}\psi = 0
+    \end{equation}
+    Nous en reprenons la version adimensionnelle, simplifiée dans une dimension de l'espace: 
+    \begin{equation}
+      c^2 u_{xx} = u_{tt} + bu 
+    \end{equation}
+    où $c$ et $b$ sont strictement positives. 
+\end{exampleblock}
+
+\end{frame}
+\begin{frame}
+Considérons les conditions initiales classiques $u(0,t)=u(\ell,t) = 0$ et $u(x,0)=f(x)$ et par
+ailleurs, posons $u_t(x,0)=0$. La solution est : 
+
+\begin{equation}
+  u(x,t)= \sum_{n=1}^\infty a_n \sin(\lambda_n x)\cos\left( t\sqrt {b + \lambda_n^2 c^2 }\right), 
+\end{equation}
+
+
+avec $\lambda_n = n\pi$ et $a_n = 2 \int_0^1 f(x) \sin(\lambda_n x)\, \mathrm{d}x$. 
+\end{frame}
+\begin{frame}
+\begin{exerciceexamen}
+  \begin{enumerate}
+  \tiny
+    \item Développez une approximation du problème en différences finies. Soignez les conditions initiales, de telle façon que les approximations soient de l'ordre de $\mathcal{O}(h^2) + \mathcal{O}(k^2)$, et que les conditions CFL soient satisfaites. 
+    \item Quelles sont les conditions de stabilité sur $h$ et $k$ ?
+    \item Dans la région de stabilitié, votre schéma est-il \textit{dispersif} ou \textit{dissipatif} ? \\
+      Considérez maintenant la condition initiale suivante: 
+
+
+      \begin{equation}
+        f(x) = 
+        \begin{cases}
+          \frac{1}{2}\left(1-\cos\left( \frac{2\pi x}{a} \right) \right), & \text{si $0 \leq x \leq a$} \\
+            0,              & \text{sinon},
+        \end{cases}
+        \label{}
+      \end{equation}
+      avec $a = 0.09$, et les paramètres $c=1$ et $b=4$. Discrétisez selon ce qui vous semble raisonnable (ne pas avoir peur: il faut au moins 150  points de grille)
+    \item Utilisez un pas de temps $k$ qui satisfait la condition de stabilité et estimez $u$ jusque $t=2.0$ pour $0\leq x \leq 1$ et dessinez les solutions exactes et numériques pour $t=0$, $t=0.4$ $\ldots$ $t=2.0$. 
+    \item Répétez l'étape précédente en doublant le nombre de points.
+    \item Estimez les vitesses de phase et de groupe en fonction du nombre d'onde : compare la valeur théorique avec les valeurs numériques dans les deux cas de discrétisation.
+    \item Commentez vos résultats. 
+  \end{enumerate}
+\end{exerciceexamen}
+
+
 \end{frame}
 \end{document}

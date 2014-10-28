@@ -9,6 +9,9 @@ PHY2371.pdf : PHY2371.tex bratu.pdf heat_0.pdf \
 	PHY2371.f0.table PHY2371.f1.table PHY2371.f2.table
 	pdflatex PHY2371.tex
 
+pdf : PHY2371.tex
+	pdflatex PHY2371.tex
+
 bratu.pdf : bvp.py
 	python bvp.py
 
