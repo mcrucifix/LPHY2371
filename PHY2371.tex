@@ -31,10 +31,11 @@
  \newcommand{\Python}{\texttt{Python}}
 \newcommand{\blue}[1]{{\color{blue}#1}}
 \renewcommand{\emph}[1]{{\color{purple}#1}}
-\usepackage{xcolor}
 \usepackage[french]{babel}
+%\usepackage[table]{xcolor}
 \deftranslation[to=french]{Theorem}{Th\'eor\`eme}
 \deftranslation[to=french]{Example}{Exemple}
+\deftranslation[to=french]{Outline}{Plan de cours}
 \deftranslation[to=french]{Definition}{D\'efinition}
 \usepackage[utf8]{inputenc}
 \usepackage{times}
@@ -117,7 +118,7 @@
 { michel.crucifix@uclouvain.be }
 \AtBeginSection[]
 {
-  \begin{frame}<beamer>{Outline}
+  \begin{frame}<beamer>{Plan de cours}
     \tableofcontents[currentsection,currentsubsection]
   \end{frame}
 }
@@ -135,9 +136,41 @@
   \titlepage
 \end{frame}
 
-\begin{frame}{Outline}
+\begin{frame}{Plan de cours}
   \tableofcontents
   % You might wish to add the option [pausesections]
+\end{frame}
+
+\begin{frame}
+\frametitle{Agenda}
+\bgroup
+% \rowcolors{1}{white}{gray} clashes later
+\begin{tabular}{llll}
+L & 14/09 & Chap. 1 + 2 & Mercator B336 \\
+V & 18/09 & pas cours   & -- \\
+\hline
+L & 21/09 & Chap. 3 + 4 & Mercator B336 \\
+V & 25/09 & pas cours   & -- \\
+\hline
+L & 28/09 & Chap. 4 + 5 & Mercator B336 \\
+V & 02/10 & Exo S\'eance 1 & Mercator B336 \\
+\hline
+L & 05/10 & Exo S\'eance 2 & Mercator B336 \\
+V & 09/10 & Exo S\'eance 3 & Curie \\
+\hline
+L & 12/10 & pas cours &  -- \\
+V & 16/10 & Exo S\'eance 4 & Curie \\
+\hline
+L & 19/10 & Chap. 5 + 6 & Mercator B336 \\
+V & 23/10 & Exo S\'eance 5 & Curie \\
+\hline
+L & 26/10 & Pr\'editabilit\'e I & Mercator B336 \\
+V & 30/10 & Exo S\'eance 6  & Curie \\
+\hline
+L & 02/11 & Pr\'edictabilit\'e II & Mercator B336 \\
+V & 06/11 & Exo Séance 7 & Curie \\
+\end{tabular}
+\egroup
 \end{frame}
 
 \section{Introduction}
@@ -152,7 +185,7 @@
   \end{columns}
 \end{frame}
 \begin{frame}
-  \frametitle{Définition}
+  \frametitle{Simulation: Définition (dans notre contexte) ! }
   \colorbox{blue!10}{\parbox[l]{\textwidth}
   {\raggedright\Large\bf{
   Résolution algorithmique d'un modèle (physique, chimique, biologique, économique \ldots) analytiquement intractable.
@@ -226,7 +259,7 @@
   \vskip0.5em
   \begin{block}{Simulateurs stochastiques: bien comprendre !}
     Nos ordinateurs sont \textit{toujours} déterministes : \newline
-    Les simulateurs stochastiques utilisent des générateurs de pseudo-nombre
+    Les simulateurs stochastiques utilisent des générateurs de pseudo-nombres
     aléatoires\ldots \emph{qu'il faut évaluer} ! \newline
   \end{block}
 \end{frame}
@@ -251,13 +284,13 @@
   \end{itemize}
   \begin{block}{Mon principe}
     Favoriser les sytèmes open source (communauté internet) permettant des 
-    inclusion de code compilé pour les parties critiques. Mes favoris: \R \ et \texttt{numpy / scipy}
+    inclusions de code compilé pour les parties critiques. Mes favoris: \R \ et \texttt{numpy / scipy}
   \end{block}
 \end{frame}
 
 \section{Problèmes aux conditions initiales}
 \begin{frame}
-\frametitle{Examples}
+\frametitle{Exemples}
 \begin{exampleblock}{Décroissance radioactive}
 $\ddt{x} = -\lambda x$, \quad avec $x(t_0)=x_0$. \newline
 Posons $\hat{x}=x/x_0$ et $\hat{t}=(t-t_0)\lambda$, on a 
@@ -323,7 +356,7 @@ On peut faire:
 x(t_{i+1}) &= x(t_i) + F_i k + k\cdot \tau , & \quad \tau &= \dddt {x} (x(t_i),t_i) {k \over 2} + \mathcal{O}(k^2) \label{eq:d1} 
 \end{align} ou bien:
 \begin{align}
-x_(t_{i})   &= x(t_{i+1}) - F_{i+1} k + k\cdot\tau, &\quad \tau &= \dddt {x} (x(t_{i+1}),t_{i+1}) {k\over 2} + \mathcal{O}(k^2) \label{eq:d2}
+x(t_{i})   &= x(t_{i+1}) - F_{i+1} k + k\cdot\tau, &\quad \tau &= \dddt {x} (x(t_{i+1}),t_{i+1}) {k\over 2} + \mathcal{O}(k^2) \label{eq:d2}
 \end{align}
 
 \end{frame}
@@ -346,7 +379,7 @@ du système originel à la limite $k\rightarrow 0$.
 \hline
 Euler avant     & (\ref{eq:d1}) & $x_{i+1} = x_i + F_i \dt$ &  $\tau = \mathcal{O}(k)$ \\ 
 Euler arrière   & (\ref{eq:d2}) & $x_{i+1} = x_i + F_{i+1} \dt$ & $\tau = \mathcal{O}(k)$ \\ 
-Euler centré   & (\eqref{eq:d1} - \eqref{eq:d2}) / 2 &  $x_{i+1} = x_i + F_{i+i/2} k$ & $\tau = \mathcal{O}(k^2)$  \\
+Euler centré   & (\eqref{eq:d1} + \eqref{eq:d2}) / 2 &  $x_{i+1} = x_i + F_{i+i/2} k$ & $\tau = \mathcal{O}(k^2)$  \\
 \hline
 \end{tabular}
 où $F_{i+i/2} := {1 \over 2} (F_{i}  + F_{i+1} ) $.
@@ -438,8 +471,8 @@ Euler avant : $M_d=(1+M\dt)$; Euler arrière : $M_d=(1-M\dt)^{-1}$ ;
 Euler centré : $M_d=(1-Mk/2)^{-1}(1+M\dt/2)$.
 
 Sachant que le Hamiltonien est ici $\frac{1}{2}x\T x$, l'énergie
-augmente de $\vec{x}_i$ à $\vec{x}_{i+1}$ d'un facteur $|{M_d}\T M_d|$.
-Ce dernier doit donc être égal à $1$ dans un schéma conservatif. 
+augmente de $\vec{x}_i$ à $\vec{x}_{i+1}$ d'un facteur ${M_d}\T M_d$.
+Cette matrice doit donc être égale à la matrice identité dans un schéma conservatif. 
 
 \begin{exercice}
 Vérifier que le schéma Euler avant crée de l'énergie; que l'Euler arrière en détruit;
@@ -649,7 +682,7 @@ Montrer que la méthode de Heun n'est pas symplectique pour l'oscillateur Harmon
 \begin{enumerate}
 \item On choisit:  $$x_i = ih, \quad i=0,1, \ldots , N+1.$$
 \item On a donc: $$\ddd{y}{x}(x_i) = f(x_i) =: f_i$$
-\item On exprime : $$\ddd{y}{x}(x_i) = \frac{y_{i+1} - 2y_i + y_{i-1}}{h^2} + \mathcal{O}(h^3),$$
+\item On exprime : $$\ddd{y}{x}(x_i) = \frac{y_{i+1} - 2y_i + y_{i-1}}{h^2} + \mathcal{O}(h^2),$$
 \item Ce qui donne : $$y_{i+1} - 2y_i + y_{i-1}  = h^2 f_i.$$
 \end{enumerate}
 \end{frame}
@@ -706,7 +739,7 @@ $\vec{A}=
 \State $y_i \gets {(z_i - b_i y_{i-1}) / {w}}$
 \EndFor
 \For {$j=N-1, N-2, \ldots , 1$}
-\State $y_i \gets y_i - v_{j+1} y_{j+1}$
+\State $y_j \gets y_j - v_{j+1} y_{j+1}$
 \EndFor
 \end{algorithmic}
 }
@@ -731,7 +764,7 @@ $$
 Une matrice est dite tridiagonalement dominante si $|a_i| \geq r_i\, \forall i$, et strictement dominante si l'inégalité est stricte.
 \end{definition}
 \begin{theorem}
-Une matrice admet une inverse réelle soit si, 
+Une matrice admet une inverse réelle unique \emph{et} l'algorithme LU fournit la solution soit si, 
 \begin{enumerate}
 \item elle est strictement diagonalement dominante
 \item elle est diagonalement dominante, avec $c_i\neq 0\, \forall i$, et $|b_N|<|a_N|$.
@@ -806,7 +839,7 @@ L'erreur totale peut se décomposer en $|(y(x_i) - y_i) + (y_i - \bar{y}_i)|$, o
 \begin{theorem}
 Si les fonction $p$, $q$, $f$ sont continues, et $q(x) \leq -\gamma < 0$, alors
 \begin{equation*}
-|(y(x_i) - y_i)| \leq C \left[\tau_\infty + \mathop{max}\left\{ |E_0||E_{N+1}| \right\} \right],
+|(y(x_i) - y_i)| \leq C \left[\tau_\infty + \mathop{max}\left\{ |E_0|, |E_{N+1}| \right\} \right],
 \end{equation*}
 où $\tau_\infty$ est la plus grande erreur de troncature du schéma, $C=\mathop{max}\left\{ 1,1/\gamma \right\}$, et $E_0$ et $E_\infty$ sont les approximations éventuelles des conditions frontières.
 \end{theorem}
@@ -887,7 +920,7 @@ Que l'on peut résoudre selon la méthode de Newton. Soit:  \\
 
 Le schéma suivant doit converger vers la solution si le système est suffisamment régulier:
 \begin{equation*}
-\vec{z}_{k+1} = \vec{z}_k - {J_k}^{-1} \vec{F_k}, \quad k=0, 1, 2, \ldots
+\vec{z}_{k+1} = \vec{z}_k - {J_k}^{-1} F_k, \quad k=0, 1, 2, \ldots
 \end{equation*}
 \begin{exercice}
 Résoudre l'équation de Bratu $y^{\prime \prime}=-e^{y}$, $0<x<1$, avec $y(0)=y(1)=0$. 
@@ -924,7 +957,7 @@ $$u(0, t)= u(1, t)=0 \quad \text{ pour }\ t>0\text{, et} $$
 $$u(x, 0) = g(x), \quad \text{pour } 0 \leq x \leq 1, $$
 alors le système admet pour solution \footnote{truc: écrire $u=A(x)C(t)$}:
 \begin{equation}
-u(x, t) = \sum_{n=1}^{\infty} A_n e^{-\lambda_n^2 t} \sin (\lambda x),
+u(x, t) = \sum_{n=1}^{\infty} A_n e^{-\lambda_n^2 t} \sin (\lambda_n x),
 \label{}
 \end{equation}
 où $\lambda_n=n\pi$ et $A_n = 2 \int_0^{1} g(x) \sin (\lambda x)\, \d x$
@@ -1145,7 +1178,7 @@ avec la condition frontière $u(x,0)=g(x)$.
 \frametitle{Résolution analytique}
 Définissons $(r,s)$ tels que : $x = ar+s$ et $t = r$. Alors:
 \begin{equation}
-\pdd{u }{r} = \pdd{u}{t} \pdd{t}{r} + \pdd{u}{x} \pdd{x}{r} =  \pdt{u} + a \pdx {u} = 0.
+\pd{u }{r} = \pd{u}{t} \pd{t}{r} + \pd{u}{x} \pd{x}{r} =  \pdt{u} + a \pdx {u} = 0.
 \label{}
 \end{equation}
 \begin{tabular}{ll}
@@ -1310,9 +1343,9 @@ w_j = \kappa^j w_0\quad \text{avec }\kappa=1-\lambda(1-e^{-\icmplx rh})
 
 
 La condition de stabilité se ramène donc à (après calcul et en utilisant $1-\cos(rh) = 2\sin^2(rh/2)$):
-\[ \boxed{|\kappa|^2 =  [ 1 -  4\lambda(1-\lambda)\sin^2(rh/2) ] < 1 } \]
+\[ \boxed{|\kappa|^2 =  [ 1 -  4\lambda(1-\lambda)\sin^2(rh/2) ] \leq 1 } \]
 
-Ceci revient à $\lambda(1-\lambda) \sin^2(rh/2) \leq 0$ et,
+Ceci revient à $\lambda(1-\lambda) \sin^2(rh/2) \geq 0$ et,
 ce qui  revient à $ \lambda \leq 1$ (condition CFL).
 \end{frame}
 \begin{frame}
@@ -1370,7 +1403,9 @@ u_{i, j+1} = A u_{i+1, j} + B u_{i, j} + C u_{i-1, j}
 \end{equation*}
 Indépendamment, développons l'expression $u(x, t_j +k)$ selon Taylor, en utilisant l'équation d'advection $u_t = -a u_x$:
 \begin{equation*}
-u(x_i, t_j+k) = u (x_i,t_j) - a ku_x(x_i,t_j) + \frac{1}{2} a^2k^2 u_{xx}(x_i,t_j) - \frac{1}{6}a^3k^3(x_i, t_j)+\ldots 
+\begin{split}
+u(x_i, t_j+k) = u (x_i,t_j) - a ku_x(x_i,t_j) &+ \frac{1}{2} a^2k^2 u_{xx}(x_i,t_j)  \\ & - \frac{1}{6}a^3k^3(x_i, t_j) u_{xxx}   +\ldots 
+\end{split}
 \end{equation*}
 L'erreur de troncation (notée ici $k \tau_{ij}$) est la différence entre le schéma numérique et l'équation réelle, c'est-à-dire, en applicant cette définition:
 \begin{equation*}
@@ -1385,11 +1420,11 @@ Enfin, en utilisant
 Par identification, on trouve alors:
 \begin{equation*}
 \begin{split}
-k \tau_{ij} &= (1 - A - B - C) u_(x_i, t_j) - h (A-C-\lambda)u_x(x_i, t_j)
+k \tau_{ij} &= (1 - A - B - C) u(x_i, t_j) - h (A-C+\lambda)u_x(x_i, t_j)
 \\ & - \frac{h^2}{2} (A+C-\lambda^2) u_{xx}(x_i,t_j) - \frac{1}{6} h^3(A-C- \lambda^3)u_{xxx}(x_i,t_j)+\ldots
 \end{split}
 \end{equation*}
-Il \emph{faut} (schéma consistent) que $k\tau_{ij}$ tende vers $0$ quand $h$ tend vers $0$, ce qui impose $A + B + C=1$ et  $A-C=\lambda$. Pour déterminer le système, nous imposons en plus l'annulation du terme en dérivée seconde : $A+C = \lambda^2$. On aboutit alors au schéma Lax-Wendroff
+Il \emph{faut} (schéma consistent) que $k\tau_{ij}$ tende vers $0$ quand $h$ tend vers $0$, ce qui impose $A + B + C=1$ et  $A-C=-\lambda$. Pour déterminer le système, nous imposons en plus l'annulation du terme en dérivée seconde : $A+C = \lambda^2$. On aboutit alors au schéma Lax-Wendroff
 \begin{equation*}
 u_{i,j+1} = -\frac{1}{2}\lambda(1-\lambda)u_{i+1,j} + (1-\lambda^2)u_{ij} + \frac{1}{2}\lambda(1+\lambda)u_{i-1,j}
 \end{equation*}
@@ -1449,7 +1484,7 @@ $$
 g(x)=\left\{ 
   \begin{array}{ll}   \frac{1}{2} (1-cos(2\pi x)) & \text{si $0\leq x \leq 1$}, \\ 
                                                 0 & \text{sinon.} \end{array} \right. $$
-Utilisez une grille ou $\lambda$ vaut approximativement $0.99$ et une pour laquelle $\lambda \approx 0.5$. Commentez la méthode et vos résultats.
+Utilisez une grille où $\lambda$ vaut approximativement $0.99$ et une pour laquelle $\lambda \approx 0.5$. Commentez la méthode et vos résultats.
 \end{enumerate}
 \end{exercice}
 \end{frame}
@@ -1576,11 +1611,11 @@ $\lambda = \frac{ck}{h}$.
   Voyons comment elle se comporte dans le système numérique:
   \begin{equation*}
     e^{-\icmplx k \bar \omega} = \lambda^2 e^{\icmplx h \bar k} + 2(1-\lambda^2) 
-    + \lambda^2 e^{-\icmplx h \bar k} - e^{k\bar\omega},
+    + \lambda^2 e^{-\icmplx h \bar k} - e^{\icmplx k\bar\omega},
     \label{}
   \end{equation*}
 
-  ce qui, après un peu de calcul (et $2\sin(\frac{\theta}{2}) = 1 - \cos\theta$):
+  ce qui, après un peu de calcul (et $2\sin^2(\frac{\theta}{2}) = 1 - \cos\theta$):
   \begin{equation*}
     \sin\left( \frac{\bar \omega k}{2} \right)= \pm \lambda \sin \left( \frac{\bar k h}{2} \right).
     \label{}
@@ -1604,28 +1639,28 @@ $\lambda = \frac{ck}{h}$.
   \frametitle{Mécanique Céleste}
 
   \def\half{ {1\over2}  }
-\begin{exampleblock}{Le schéma St\o rmer-Verlet}
-\begin{align*}
-  \vec{p}_{i+\half} &= \vec{p}_i - \frac{\dt}{2}  \frac{\partial H}{\partial \vec{q}}(\vec{q}_i, \vec{p}_{i+\half}) \\
-  \vec{q}_{i+1} &= \vec{q}_i + {\dt\over 2}  
-   \left[ 
-  \frac{\partial H}{\partial \vec{p}}(\vec{q}_i, \vec{p}_{i+\half})  + 
-  \frac{\partial H}{\partial \vec{p}}(\vec{q}_{i+1}, \vec{p}_{i+\half})  
-   \right]
-   \\
-  \vec{p}_{i+1} &= \vec{p}_{i+\half} - {\dt\over 2} 
-     \left[
-     \frac{\partial H}{\partial \vec{q}}(\vec{q}_{i+1}, \vec{p}_{i+\half}) 
-     \right] 
-\end{align*}
-\end{exampleblock}
-
+%\begin{exampleblock}{Le schéma St\o rmer-Verlet}
+%\begin{align*}
+%  \vec{p}_{i+\half} &= \vec{p}_i - \frac{\dt}{2}  \frac{\partial H}{\partial \vec{q}}(\vec{q}_i, \vec{p}_{i+\half}) \\
+%  \vec{q}_{i+1} &= \vec{q}_i + {\dt\over 2}  
+%   \left[ 
+%  \frac{\partial H}{\partial \vec{p}}(\vec{q}_i, \vec{p}_{i+\half})  + 
+%  \frac{\partial H}{\partial \vec{p}}(\vec{q}_{i+1}, \vec{p}_{i+\half})  
+%   \right]
+%   \\
+%  \vec{p}_{i+1} &= \vec{p}_{i+\half} - {\dt\over 2} 
+%     \left[
+%     \frac{\partial H}{\partial \vec{q}}(\vec{q}_{i+1}, \vec{p}_{i+\half}) 
+%     \right] 
+%\end{align*}
+%\end{exampleblock}
+%
 \begin{exerciceexamen}
   \small
   En partant de conditions initiales réalistes, calculez l'évolution de l'orbite
   de Jupiter pour les 5000 prochaines années. \\
   Tenez-compte d'abord de Jupiter et le Soleil. Tenez-compte ensuite de Saturne. \\
-  Comparez les résultats obtenus avec les schémas de Heun et de St\o rmer - Verlet. 
+  Comparez les résultats obtenus avec les schémas de Heun, de Verlet et d'Euler symplectique. Les deux premiers schémas ont été vus au  cours. Concentrez votre analyse sur les invariants du système (intégrales premières).
 \end{exerciceexamen}
 
 \end{frame}
@@ -1679,11 +1714,13 @@ avec $\lambda_n = n\pi$ et $a_n = 2 \int_0^1 f(x) \sin(\lambda_n x)\, \mathrm{d}
       avec $a = 0.09$, et les paramètres $c=1$ et $b=4$. Discrétisez selon ce qui vous semble raisonnable (ne pas avoir peur: il faut au moins 150  points de grille)
     \item Utilisez un pas de temps $k$ qui satisfait la condition de stabilité et estimez $u$ jusque $t=2.0$ pour $0\leq x \leq 1$ et dessinez les solutions exactes et numériques pour $t=0$, $t=0.4$ $\ldots$ $t=2.0$. 
     \item Répétez l'étape précédente en doublant le nombre de points.
-    \item Estimez les vitesses de phase et de groupe en fonction du nombre d'onde : compare la valeur théorique avec les valeurs numériques dans les deux cas de discrétisation.
+    \item Estimez les vitesses de phase et de groupe en fonction du nombre d'onde : comparez la valeur théorique avec les valeurs numériques dans les deux cas de discrétisation.
     \item Commentez vos résultats. 
   \end{enumerate}
 \end{exerciceexamen}
 
 
 \end{frame}
+
+\end{document}
 \end{document}
