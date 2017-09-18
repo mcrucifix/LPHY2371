@@ -2,7 +2,10 @@
 % modification history
 % Mon Sep 30 13:10:10 CEST 2013 : 
 % introduced icmplx, corrected misprint and error on Euler avant in diffusion equation
-
+% Thu Sep 15 09:19:53 2016
+% update schedule + some more material for programmation paradigms
+% Wed Sep 13 09:26:12 2017
+% update schedule and delete ``exercice d'exemen" 
 
 
  \documentclass[triangle]{beamer}
@@ -143,32 +146,29 @@
 
 \begin{frame}
 \frametitle{Agenda}
+
+toutes les séances sont de 10h45 à 12h45
+
 \bgroup
 % \rowcolors{1}{white}{gray} clashes later
 \begin{tabular}{llll}
-L & 14/09 & Chap. 1 + 2 & Mercator B336 \\
-V & 18/09 & pas cours   & -- \\
+L & 18/09 & Chap. 1 + 2 & Mercator B336 \\
+V & 22/09 & Chap. 2 + 3 & MERC20 \\
 \hline
-L & 21/09 & Chap. 3 + 4 & Mercator B336 \\
-V & 25/09 & pas cours   & -- \\
+L & 25/09 & Chap. 4 & Mercator B336 \\
+V & 29/09 & Exo S\'eance 1  & MERC20 \\
 \hline
-L & 28/09 & Chap. 4 + 5 & Mercator B336 \\
-V & 02/10 & Exo S\'eance 1 & Mercator B336 \\
+L & 02/10 & Chap. 5 & Mercator B336 \\
+V & 06/10 & Exo S\'eance 2 & MERC20 \\
 \hline
-L & 05/10 & Exo S\'eance 2 & Mercator B336 \\
-V & 09/10 & Exo S\'eance 3 & Curie \\
+L & 09/10 & Exo S\'eance 3 & Ferraris\\
+V & 13/10 & Exo S\'eance 4 & Ferraris \\
 \hline
-L & 12/10 & pas cours &  -- \\
-V & 16/10 & Exo S\'eance 4 & Curie \\
+L & 16/10 & Chap. 6        &  Mercator B336 \\
+V & 20/10 & Exo S\'eance 5 & MERC20 \\
 \hline
-L & 19/10 & Chap. 5 + 6 & Mercator B336 \\
-V & 23/10 & Exo S\'eance 5 & Curie \\
-\hline
-L & 26/10 & Pr\'editabilit\'e I & Mercator B336 \\
-V & 30/10 & Exo S\'eance 6  & Curie \\
-\hline
-L & 02/11 & Pr\'edictabilit\'e II & Mercator B336 \\
-V & 06/11 & Exo Séance 7 & Curie \\
+L & 23/10 & Prédictability & Mercator B336 \\
+V & 27/10 & Exo S\'eance 6 & Ferraris \\
 \end{tabular}
 \egroup
 \end{frame}
@@ -188,7 +188,7 @@ V & 06/11 & Exo Séance 7 & Curie \\
   \frametitle{Simulation: Définition (dans notre contexte) ! }
   \colorbox{blue!10}{\parbox[l]{\textwidth}
   {\raggedright\Large\bf{
-  Résolution algorithmique d'un modèle (physique, chimique, biologique, économique \ldots) analytiquement intractable.
+  Résolution algorithmique d'un modèle (physique, chimique, biologique, économique \ldots) \emph{compliqué}.
   }
   }
   }
@@ -205,7 +205,7 @@ V & 06/11 & Exo Séance 7 & Curie \\
       \begin{itemize}
         \item Expériences d'intervention impossibles à réaliser ou trop coûteuses
         \item Générer des données difficiles à mesurer
-        \item Prédiction
+        \item Prévision / Prédiction
       \end{itemize}
   \end{enumerate}
   \begin{block}{Conflit potentiel}
@@ -238,7 +238,7 @@ V & 06/11 & Exo Séance 7 & Curie \\
 \end{frame}
 
 \begin{frame}
-  \frametitle{Contextes de simulation}
+  \frametitle{Contextes de simulation numérique}
   \begin{enumerate}
     \item Résolution d'équations différentielles
       \begin{enumerate}
@@ -249,12 +249,12 @@ V & 06/11 & Exo Séance 7 & Curie \\
     \item Problèmes d'optimisation (souvent définis comme des problèmes inverses)
     \item Générer des distributions de probabilité
   \end{enumerate}
-  \begin{exercice}
-    Citer un exemple pour chacun des trois cas de figure
-  \end{exercice}
+%  \begin{exercice}
+%    Citer un exemple pour chacun des trois cas de figure
+%  \end{exercice}
 \end{frame}
 \begin{frame}
-  $\exists$ Deux types de simulateurs: \newline
+  $\exists$ Déterministe ou Stochastique \newline
   Déterministe  $\quad <> \quad $ Stochastique\newline
   \vskip0.5em
   \begin{block}{Simulateurs stochastiques: bien comprendre !}
@@ -264,28 +264,45 @@ V & 06/11 & Exo Séance 7 & Curie \\
   \end{block}
 \end{frame}
 \begin{frame}{Approches de programmation}
-  \begin{itemize}
-    \item Languages compilés : excellente optimisation
-      \begin{itemize}
-        \item C, C++, Fortran
-      \end{itemize}
-    \item Languages interprétés : flexibles et conviviaux
-      \begin{itemize}
-        \item \R, \texttt{python} (\texttt{numpy, scipy})  
-        \item Systèmes commerciaux : Matlab, Mathematica \ldots
-        \item et clones (octave)
-      \end{itemize}
-    \item + Librairies standards, optimisées
-      \begin{itemize}
-        \item  gsl
-        \item  LAPACK, BLAS, UMFPACK
-        \item \ldots souvent présentes dans les langagues interprétés
-      \end{itemize}
-  \end{itemize}
-  \begin{block}{Mon principe}
-    Favoriser les sytèmes open source (communauté internet) permettant des 
-    inclusions de code compilé pour les parties critiques. Mes favoris: \R \ et \texttt{numpy / scipy}
-  \end{block}
+Il existe des dizaines de languages de programmation ! 
+
+\begin{itemize}
+\item \emph{Compilé} (C, C++, Fortran) ou \emph{interprété} (Python, Guile, MATLAB, R)
+\item \emph{Procédural} (Fortran) ou \emph{fonctionnel} (LISP, Haskell)
+\item \emph{Impératif} (C) ou \emph{déclaratif} (Prolog, SQL)
+\item \emph{Orienté objet} (Python, Ruby, php) ou non (Fortran)
+\item \emph{Bas niveau} (Assembleur, C) ou \emph{Haut niveau} (Python, R, Julia)
+\item \emph{Concurrent} (Fortran + MPI, R (packages parallel),  Julia)
+\item \emph{Ancien} (Algol) ou très \emph{récent} (Julia)
+\item \emph{Commercial} (MATLAB) ou \emph{Libre} (Octave)
+\item \ldots
+\end{itemize}
+
+avec toutes les nuances (e.g: Perl, Python, php peuvent être utilisés de façon procédurale, fonctionnelle, orienté objet ou non, et sont compilés en ``bytecode")
+
+Voir : \url{http://rosettacode.org} et amusez-vous ! 
+%  \begin{itemize}
+%    \item Languages compilés : excellente optimisation
+%      \begin{itemize}
+%        \item C, C++, Fortran
+%      \end{itemize}
+%    \item Languages interprétés : flexibles et conviviaux
+%      \begin{itemize}
+%        \item \R, \texttt{python} (\texttt{numpy, scipy})  
+%        \item Systèmes commerciaux : Matlab, Mathematica \ldots
+%        \item et clones (octave)
+%      \end{itemize}
+%    \item + Librairies standards, optimisées
+%      \begin{itemize}
+%        \item  gsl
+%        \item  LAPACK, BLAS, UMFPACK
+%        \item \ldots souvent présentes dans les langagues interprétés
+%      \end{itemize}
+%  \end{itemize}
+%  \begin{block}{Mon principe}
+%    Favoriser les sytèmes open source (communauté internet) permettant des 
+%    inclusions de code compilé pour les parties critiques. Mes favoris: \R \ et \texttt{numpy / scipy}
+%  \end{block}
 \end{frame}
 
 \section{Problèmes aux conditions initiales}
@@ -319,7 +336,7 @@ De façon générale, le système s'écrit:
 \begin{enumerate}
 \item Définir les points de discrétisation dans le temps
 \item Exprimer le système sous la forme d'une différence finie
-\item Laisser tomber l'erreur de troncation
+\item Laisser tomber l'erreur de troncature
 \item Étudier les propriétés : stabilité, convergence, et autres (voir plus loin)
 \end{enumerate}
 \end{frame}
@@ -362,9 +379,9 @@ x(t_{i})   &= x(t_{i+1}) - F_{i+1} k + k\cdot\tau, &\quad \tau &= \dddt {x} (x(t
 \end{frame}
 
 \begin{frame}
-\frametitle{\ldots et laisser tomber les termes de troncation}
+\frametitle{\ldots et laisser tomber les termes de troncature}
 
-On crée le système aux différences finies en laissant tomber les termes de troncation:
+On crée le système aux différences finies en laissant tomber les termes de troncature:
 
 \begin{definition}
 Le schéma est dit \textit{consistent} si l'itération converge vers l'expression
@@ -795,7 +812,7 @@ si $p(x)$, $q(x)$ et $f(x)$ sont continues, et que $q(x)\leq0$, alors la solutio
 \end{definition}
 
 \begin{numerictip}
- La résolution numérique de l'inverse d'une matrice n'est fiable que si l'inverse de sa condition est grand par rapport à l'erreur de troncature. 
+ La résolution numérique de l'inverse d'une matrice n'est fiable que si l'inverse de sa condition est grand par rapport à l'erreur d'arrondi. 
 \end{numerictip}
 \end{frame}
 
@@ -1407,7 +1424,7 @@ Indépendamment, développons l'expression $u(x, t_j +k)$ selon Taylor, en utili
 u(x_i, t_j+k) = u (x_i,t_j) - a ku_x(x_i,t_j) &+ \frac{1}{2} a^2k^2 u_{xx}(x_i,t_j)  \\ & - \frac{1}{6}a^3k^3(x_i, t_j) u_{xxx}   +\ldots 
 \end{split}
 \end{equation*}
-L'erreur de troncation (notée ici $k \tau_{ij}$) est la différence entre le schéma numérique et l'équation réelle, c'est-à-dire, en applicant cette définition:
+L'erreur de troncature (notée ici $k \tau_{ij}$) est la différence entre le schéma numérique et l'équation réelle, c'est-à-dire, en applicant cette définition:
 \begin{equation*}
 u(x_i, t_j+k) = A u(x_i+h, t_j) + B u(x_i, t_j) + C u(x_i-h, t_j)  + k\tau_{ij}
 \end{equation*}
@@ -1429,7 +1446,7 @@ Il \emph{faut} (schéma consistent) que $k\tau_{ij}$ tende vers $0$ quand $h$ te
 u_{i,j+1} = -\frac{1}{2}\lambda(1-\lambda)u_{i+1,j} + (1-\lambda^2)u_{ij} + \frac{1}{2}\lambda(1+\lambda)u_{i-1,j}
 \end{equation*}
 
-On peut vérifier que le terme de troncation est maintenant $\mathcal{O}(k^2) + \mathcal{O}(h^2) $.
+On peut vérifier que le terme de troncature est maintenant $\mathcal{O}(k^2) + \mathcal{O}(h^2) $.
 \end{frame}
 \begin{frame}
 \frametitle{Domaine de dépendence, schéma Lax-Wendroff}
@@ -1541,7 +1558,7 @@ On a:
 u_{i,j+1} = \lambda^2 u_{i+1,j} + 2 (1-\lambda^2)u_{i,j} + \lambda^2 u_{i-1,j} -  u_{i,j-1}  + k^2\tau_{ij}
 \label{}
 \end{equation*}
-où $\tau_{i,j}=\mathcal{O}(h^2) + \mathcal{O}(k^2)$ est l'erreur de troncation et 
+où $\tau_{i,j}=\mathcal{O}(h^2) + \mathcal{O}(k^2)$ est l'erreur de troncature et 
 $\lambda = \frac{ck}{h}$.
 \end{frame}
 
@@ -1602,12 +1619,13 @@ $\lambda = \frac{ck}{h}$.
 
  \begin{frame}
    \frametitle{Onde plane}
-   L'onde plane est une solution classique de l'équation d'onde:
+   L'onde plane 
    \begin{equation*}
-     u(x,t) = e^{\bar k x - \bar \omega t}
+     u(x,t) = e^{i(\bar k x - \bar \omega t)}
      \label{}
    \end{equation*}
-  Dont on connait la solution exacte: $\bar\omega^2 = c^2 \bar k^2$. 
+   est une solution classique de l'équation d'onde, dont
+   on connait la relation de dispersion: $\bar\omega^2 = c^2 \bar k^2$. 
   Voyons comment elle se comporte dans le système numérique:
   \begin{equation*}
     e^{-\icmplx k \bar \omega} = \lambda^2 e^{\icmplx h \bar k} + 2(1-\lambda^2) 
@@ -1634,93 +1652,113 @@ $\lambda = \frac{ck}{h}$.
  \end{frame}
 
 
- \section{Exercices d'examen}
-\begin{frame}
-  \frametitle{Mécanique Céleste}
-
-  \def\half{ {1\over2}  }
-%\begin{exampleblock}{Le schéma St\o rmer-Verlet}
-%\begin{align*}
-%  \vec{p}_{i+\half} &= \vec{p}_i - \frac{\dt}{2}  \frac{\partial H}{\partial \vec{q}}(\vec{q}_i, \vec{p}_{i+\half}) \\
-%  \vec{q}_{i+1} &= \vec{q}_i + {\dt\over 2}  
-%   \left[ 
-%  \frac{\partial H}{\partial \vec{p}}(\vec{q}_i, \vec{p}_{i+\half})  + 
-%  \frac{\partial H}{\partial \vec{p}}(\vec{q}_{i+1}, \vec{p}_{i+\half})  
-%   \right]
-%   \\
-%  \vec{p}_{i+1} &= \vec{p}_{i+\half} - {\dt\over 2} 
-%     \left[
-%     \frac{\partial H}{\partial \vec{q}}(\vec{q}_{i+1}, \vec{p}_{i+\half}) 
-%     \right] 
-%\end{align*}
-%\end{exampleblock}
-%
-\begin{exerciceexamen}
-  \small
-  En partant de conditions initiales réalistes, calculez l'évolution de l'orbite
-  de Jupiter pour les 5000 prochaines années. \\
-  Tenez-compte d'abord de Jupiter et le Soleil. Tenez-compte ensuite de Saturne. \\
-  Comparez les résultats obtenus avec les schémas de Heun, de Verlet et d'Euler symplectique. Les deux premiers schémas ont été vus au  cours. Concentrez votre analyse sur les invariants du système (intégrales premières).
-\end{exerciceexamen}
-
-\end{frame}
-
-\begin{frame}
-  \frametitle{Équation de Klein-Gordon}
-
-  \begin{exampleblock}{Contexte physique}
-    L'équation de Klein-Gordon  est une forme relativiste de l'équation de Schröninger. Sa formulation
-    physique est 
-    \begin{equation}
-      \frac{1}{c^2}\frac{\partial^2}{\partial t^2} \psi - \nabla^2\psi + \frac{m^2c^2}{\hbar}\psi = 0
-    \end{equation}
-    Nous en reprenons la version adimensionnelle, simplifiée dans une dimension de l'espace: 
-    \begin{equation}
-      c^2 u_{xx} = u_{tt} + bu 
-    \end{equation}
-    où $c$ et $b$ sont strictement positives. 
-\end{exampleblock}
-
-\end{frame}
-\begin{frame}
-Considérons les conditions initiales classiques $u(0,t)=u(\ell,t) = 0$ et $u(x,0)=f(x)$ et par
-ailleurs, posons $u_t(x,0)=0$. La solution est : 
-
-\begin{equation}
-  u(x,t)= \sum_{n=1}^\infty a_n \sin(\lambda_n x)\cos\left( t\sqrt {b + \lambda_n^2 c^2 }\right), 
-\end{equation}
-
-
-avec $\lambda_n = n\pi$ et $a_n = 2 \int_0^1 f(x) \sin(\lambda_n x)\, \mathrm{d}x$. 
-\end{frame}
-\begin{frame}
-\begin{exerciceexamen}
-  \begin{enumerate}
-  \tiny
-    \item Développez une approximation du problème en différences finies. Soignez les conditions initiales, de telle façon que les approximations soient de l'ordre de $\mathcal{O}(h^2) + \mathcal{O}(k^2)$, et que les conditions CFL soient satisfaites. 
-    \item Quelles sont les conditions de stabilité sur $h$ et $k$ ?
-    \item Dans la région de stabilitié, votre schéma est-il \textit{dispersif} ou \textit{dissipatif} ? \\
-      Considérez maintenant la condition initiale suivante: 
-
-
-      \begin{equation}
-        f(x) = 
-        \begin{cases}
-          \frac{1}{2}\left(1-\cos\left( \frac{2\pi x}{a} \right) \right), & \text{si $0 \leq x \leq a$} \\
-            0,              & \text{sinon},
-        \end{cases}
-        \label{}
-      \end{equation}
-      avec $a = 0.09$, et les paramètres $c=1$ et $b=4$. Discrétisez selon ce qui vous semble raisonnable (ne pas avoir peur: il faut au moins 150  points de grille)
-    \item Utilisez un pas de temps $k$ qui satisfait la condition de stabilité et estimez $u$ jusque $t=2.0$ pour $0\leq x \leq 1$ et dessinez les solutions exactes et numériques pour $t=0$, $t=0.4$ $\ldots$ $t=2.0$. 
-    \item Répétez l'étape précédente en doublant le nombre de points.
-    \item Estimez les vitesses de phase et de groupe en fonction du nombre d'onde : comparez la valeur théorique avec les valeurs numériques dans les deux cas de discrétisation.
-    \item Commentez vos résultats. 
-  \end{enumerate}
-\end{exerciceexamen}
-
-
-\end{frame}
 
 \end{document}
+% \section{Exercices d'examen}
+%\begin{frame}
+%  \frametitle{Mécanique Céleste}
+%
+%  \def\half{ {1\over2}  }
+%%\begin{exampleblock}{Le schéma St\o rmer-Verlet}
+%%\begin{align*}
+%%  \vec{p}_{i+\half} &= \vec{p}_i - \frac{\dt}{2}  \frac{\partial H}{\partial \vec{q}}(\vec{q}_i, \vec{p}_{i+\half}) \\
+%%  \vec{q}_{i+1} &= \vec{q}_i + {\dt\over 2}  
+%%   \left[ 
+%%  \frac{\partial H}{\partial \vec{p}}(\vec{q}_i, \vec{p}_{i+\half})  + 
+%%  \frac{\partial H}{\partial \vec{p}}(\vec{q}_{i+1}, \vec{p}_{i+\half})  
+%%   \right]
+%%   \\
+%%  \vec{p}_{i+1} &= \vec{p}_{i+\half} - {\dt\over 2} 
+%%     \left[
+%%     \frac{\partial H}{\partial \vec{q}}(\vec{q}_{i+1}, \vec{p}_{i+\half}) 
+%%     \right] 
+%%\end{align*}
+%%\end{exampleblock}
+%%
+%\begin{exerciceexamen}
+%  \small
+%  En partant de conditions initiales réalistes, calculez l'évolution de l'orbite
+%  de Jupiter pour les 5000 prochaines années. \\
+%  Tenez-compte d'abord de Jupiter et le Soleil. Tenez-compte ensuite de Saturne. \\
+%  Comparez les résultats obtenus avec les schémas de Heun, de Verlet et d'Euler symplectique. Les deux premiers schémas ont été vus au  cours. Concentrez votre analyse sur les invariants du système (intégrales premières).
+%\end{exerciceexamen}
+%
+%\end{frame}
+%
+%\begin{frame}
+%  \frametitle{Équation de Klein-Gordon}
+%
+%  \begin{exampleblock}{Contexte physique}
+%    L'équation de Klein-Gordon  est une forme relativiste de l'équation de Schröninger. Sa formulation
+%    physique est 
+%    \begin{equation}
+%      \frac{1}{c^2}\frac{\partial^2}{\partial t^2} \psi - \nabla^2\psi + \frac{m^2c^2}{\hbar}\psi = 0
+%    \end{equation}
+%    Nous en reprenons la version adimensionnelle, simplifiée dans une dimension de l'espace: 
+%    \begin{equation}
+%      c^2 u_{xx} = u_{tt} + bu 
+%    \end{equation}
+%    où $c$ et $b$ sont strictement positives. 
+%\end{exampleblock}
+%
+%\end{frame}
+%\begin{frame}
+%Considérons les conditions initiales classiques $u(0,t)=u(\ell,t) = 0$ et $u(x,0)=f(x)$ et par
+%ailleurs, posons $u_t(x,0)=0$. La solution est : 
+%
+%\begin{equation}
+%  u(x,t)= \sum_{n=1}^\infty a_n \sin(\lambda_n x)\cos\left( t\sqrt {b + \lambda_n^2 c^2 }\right), 
+%\end{equation}
+%
+%
+%avec $\lambda_n = n\pi$ et $a_n = 2 \int_0^1 f(x) \sin(\lambda_n x)\, \mathrm{d}x$. 
+%\end{frame}
+%\begin{frame}
+%\begin{exerciceexamen}
+%  \begin{enumerate}
+%  \tiny
+%    \item Développez une approximation du problème en différences finies. Soignez les conditions initiales, de telle façon que les approximations soient de l'ordre de $\mathcal{O}(h^2) + \mathcal{O}(k^2)$, et que les conditions CFL soient satisfaites. 
+%    \item Quelles sont les conditions de stabilité sur $h$ et $k$ ?
+%    \item Dans la région de stabilitié, votre schéma est-il \textit{dispersif} ou \textit{dissipatif} ? \\
+%      Considérez maintenant la condition initiale suivante: 
+%
+%
+%      \begin{equation}
+%        f(x) = 
+%        \begin{cases}
+%          \frac{1}{2}\left(1-\cos\left( \frac{2\pi x}{a} \right) \right), & \text{si $0 \leq x \leq a$} \\
+%            0,              & \text{sinon},
+%        \end{cases}
+%        \label{}
+%      \end{equation}
+%      avec $a = 0.09$, et les paramètres $c=1$ et $b=4$. Discrétisez selon ce qui vous semble raisonnable (ne pas avoir peur: il faut au moins 150  points de grille)
+%    \item Utilisez un pas de temps $k$ qui satisfait la condition de stabilité et estimez $u$ jusque $t=2.0$ pour $0\leq x \leq 1$ et dessinez les solutions exactes et numériques pour $t=0$, $t=0.4$ $\ldots$ $t=2.0$. 
+%    \item Répétez l'étape précédente en doublant le nombre de points.
+%    \item Estimez les vitesses de phase et de groupe en fonction du nombre d'onde : comparez la valeur théorique avec les valeurs numériques dans les deux cas de discrétisation.
+%    \item Commentez vos résultats. 
+%  \end{enumerate}
+%\end{exerciceexamen}
+%\begin{frame}
+%\begin{exerciceexamen}
+%\tiny
+%Considerez l'équation d'advection-diffusion suivante:
+%\begin{equation}
+%D u_{xx} - a u_x - bu = u_t
+%\label{}
+%\end{equation}
+%\begin{enumerate}
+%\item Fournissez un schéma numérique explicite d'ordre $\mathcal{O}(h+k)$. Donnez-en le stencil. Nous pouvons introduire les facteurs $\lambda_d = Dk/h^2$, $\lambda_a = ak/h$ et $\lambda_b = bk$. Quelles importances ces facteurs ont-ils pour la condition de stabilité ? 
+%\item Fournissez la solution analytique de l'équation, ainsi que la relation de dispersion. Discutez brièvement les cas particuliers déjà vus au cours ($D=0$, $b=0$, etc. ) 
+%\item Fournissez un schéma implicite. Est-il toujours stable ? 
+%\item Illustrez votre propos avec plusieurs simulations numériques, comparant schémas numériques implicites et explicites
+%\item Montrez, dans ces schéma numériques, quels termes sont responsables de la diffusion numérique. Quel est son ordre de grandeur par rapport à la diffusion explicitement modélisée par le terme $D$ ?
+%\item Comparez vitesse de groupe numérique avec celle du système originel. Le schéma est-il dispersif ? 
+%\item Le terme de diffusion $D$ peut-il être responsable d'un comportement instable? Expliquez
+%\item Fournissez un schéma de Lax-Wendroff à trois points ($i-1$, $i$, $i+1$) dans l'espace. Quel est l'ordre de ce schéma ? Est-il monotone ? Discutez les avantages et les inconvénients au schéma que vous avez donné au point 1 ci-dessus. 
+%\end{enumerate}
+%\end{exerciceexamen}
+%
+\end{frame}
+
+%\end{document}
 \end{document}
